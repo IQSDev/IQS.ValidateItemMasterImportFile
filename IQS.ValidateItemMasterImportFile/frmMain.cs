@@ -32,10 +32,9 @@ namespace IQS.ValidateItemMasterImportFile
                 {
                     string selectedFilePath = openFileDialog.FileName;
                     string newFilePath = selectedFilePath.Replace("[", "_").Replace("]", "_");
-                    #region Rename File so PowerShell won't have an issue:
+
                     File.Move(selectedFilePath, newFilePath);
-                    #endregion
-                    // Display the selected file path (you can update a label or any other UI element)
+
                     lblOrigSpreadsheet.Text = newFilePath;
                     btnValidate.Enabled = true;
                 }
@@ -46,6 +45,7 @@ namespace IQS.ValidateItemMasterImportFile
         {
             int exitCode = 0;
             exitCode = ItemMasterValidator.Run(lblOrigSpreadsheet.Text);
+            txtErrors.Visible = true;
             if (exitCode == 0)
             {
                 lblValidatedSpreadsheet.Text = lblOrigSpreadsheet.Text.Replace(".xlsx", "_Validated.xlsx");
